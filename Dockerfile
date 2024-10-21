@@ -2,10 +2,10 @@
 FROM openjdk:17-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /test
 
 # Copy the packaged JAR file into the container at /app
-COPY target/test-0.0.1-SNAPSHOT.jar app.jar
+COPY target/test-0.0.1-SNAPSHOT.jar test.jar
 
 # Expose the port that your application listens on
 EXPOSE 8080
