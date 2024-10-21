@@ -1,18 +1,26 @@
 package com.example.test;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 
-@RestController
+@Controller
 @RequestMapping("/api/auth")
-public class Controller {
+public class AuthController {
+
+    @GetMapping("/login")
+    public String showLoginForm(Model model) {
+        model.addAttribute("loginRequest", new LoginRequest());
+        return "login"; // Returns the login.html template
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public String login(@ModelAttribute LoginRequest loginRequest, Model model) {
         if ("user".equals(loginRequest.getUsername()) && "password".equals(loginRequest.getPassword())) {
-            return ResponseEntity.ok("Login successful!");
+            return "success"; // Returns the success.html template
         } else {
-            return ResponseEntity.status(401).body("Invalid username or password");
+            model.addAttribute("error", "Invalid username or password");
+            return "login";
         }
     }
 }
@@ -37,5 +45,4 @@ class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
